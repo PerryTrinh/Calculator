@@ -6,11 +6,13 @@ public class FourFuncCalc extends Frame {
     private String[] buttons;
     private TextField tfDisplay;
     private int count;
+    private String operator;
 
     public FourFuncCalc() {
         Panel panelDisplay = new Panel(new FlowLayout());
         tfDisplay = new TextField("0", 20);
         panelDisplay.add(tfDisplay);
+        operator = "";
 
         Panel panelButtons = new Panel(new GridLayout(4, 4, 4, 4));
         buttons = new String[] {"7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "*", "0", "C", "=", "/"};
@@ -26,16 +28,23 @@ public class FourFuncCalc extends Frame {
         add(panelButtons, BorderLayout.CENTER);
 
         ButtonListener listener = new ButtonListener();
-        for(int i = 1; i < btnNumbers.length; i++) {
-            btnNumbers[i].addActionListener(listener);
+        for(Button i: btnNumbers) {
+            i.addActionListener(listener);
         }
 
         setTitle("Calculator Demo");
         setSize(400, 300);
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        int w = getSize().width;
+        int h = getSize().height;
+        int x = (dim.width - w)/2;
+        int y = (dim.height - h)/2;
+
+        setLocation(x, y);
         setVisible(true);
     }
 
-    // The entry main() method
     public static void main(String[] args) {
         new FourFuncCalc();
     }
@@ -47,17 +56,20 @@ public class FourFuncCalc extends Frame {
             String symbol = source.getLabel();
 
             if(isNumeric(symbol)) {
-                tfDisplay.setText(symbol);
-            } else if(symbol == "+") {
-                tfDisplay.setText("addition");
-            } else if(symbol == "-") {
-                tfDisplay.setText("subtraction");
-            } else if(symbol == "*") {
-                tfDisplay.setText("multiplication");
-            } else if(symbol == "/") {
-                tfDisplay.setText("Division");
+                if(!operator.equals("")) {
+                    count = evaluate(operator, count, Integer.parseInt(symbol));
+                    operator = "";
+                } else {
+                    count = Integer.parseInt(symbol);
+                }
+                tfDisplay.setText(symbol + "");
+            } else if(symbol.equals("C")) {
+                count = 0;
+                tfDisplay.setText(count + "");
+            } else if(symbol.equals("=")){
+                tfDisplay.setText(count + "");
             } else {
-                tfDisplay.setText("0");
+                operator = symbol;
             }
         }
     }
@@ -68,6 +80,21 @@ public class FourFuncCalc extends Frame {
             return true;
         } catch (NumberFormatException e) {
             return false;
+        }
+    }
+
+    public static int evaluate(String operator, int operand1, int operand2) {
+        switch(operator) {
+            case "+":
+                return operand1 + operand2;
+            case "-":
+                return operand1 - operand2;
+            case "*":
+                return operand1 * operand2;
+            case "/":
+                return operand1 / operand2;
+            default:
+                return 0;
         }
     }
 }

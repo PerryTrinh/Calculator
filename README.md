@@ -1,3 +1,3 @@
 # FourFuncCalc
 
-*Work in Progress*
+Only floor division
