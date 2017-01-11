@@ -62,9 +62,9 @@ public class FourFuncCalc extends Frame {
             Button source = (Button)e.getSource();
             String symbol = source.getLabel();
 
-            if(isNumeric(symbol)) {
+            if(Solver.isNumeric(symbol)) {
                 if(!operator.equals("")) {
-                    count = evaluate(operator, count, Integer.parseInt(symbol));
+                    count = Solver.evaluate(operator, count, Integer.parseInt(symbol));
                     operator = "";
                 } else {
                     count = Integer.parseInt(symbol);
@@ -78,30 +78,6 @@ public class FourFuncCalc extends Frame {
             } else {
                 operator = symbol;
             }
-        }
-    }
-
-    public static boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    public static int evaluate(String operator, int operand1, int operand2) {
-        switch(operator) {
-            case "+":
-                return operand1 + operand2;
-            case "-":
-                return operand1 - operand2;
-            case "*":
-                return operand1 * operand2;
-            case "/":
-                return operand1 / operand2;
-            default:
-                return 0;
         }
     }
 }
