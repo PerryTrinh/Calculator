@@ -32,7 +32,14 @@ public class FourFuncCalc extends Frame {
             i.addActionListener(listener);
         }
 
-        setTitle("Calculator Demo");
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
+        setTitle("Four Function Calculator");
         setSize(400, 300);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
