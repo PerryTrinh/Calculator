@@ -5,16 +5,18 @@ public class FourFuncCalc extends Frame {
     private Button[] btnNumbers;
     private String[] buttons;
     private TextField tfDisplay;
+    private int calcWidth = 450;
+    private int calcLength = 350;
     private int count;
     private String operator;
-
+    
     public FourFuncCalc() {
         Panel panelDisplay = new Panel(new FlowLayout());
         tfDisplay = new TextField("0", 20);
         panelDisplay.add(tfDisplay);
         operator = "";
 
-        Panel panelButtons = new Panel(new GridLayout(4, 4, 4, 4));
+        Panel panelButtons = new Panel(new GridLayout(4, 4, 5, 5));
         buttons = new String[] {"7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "*", "0", "C", "=", "/"};
         btnNumbers = new Button[buttons.length];
 
@@ -40,7 +42,7 @@ public class FourFuncCalc extends Frame {
         });
 
         setTitle("Four Function Calculator");
-        setSize(400, 300);
+        setSize(calcLength, calcWidth);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         int w = getSize().width;
@@ -59,7 +61,7 @@ public class FourFuncCalc extends Frame {
     private class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String symbol = ((Button)e.getSource()).getLabel();
+            String symbol = ((Button) e.getSource()).getLabel();
 
             if(Solver.isNumeric(symbol)) {
                 if(!operator.equals("")) {
