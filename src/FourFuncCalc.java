@@ -9,10 +9,11 @@ public class FourFuncCalc extends Frame {
     private int calcLength = 350;
     private int count;
     private String operator;
-    
+
     public FourFuncCalc() {
         Panel panelDisplay = new Panel(new FlowLayout());
         tfDisplay = new TextField("0", 20);
+        tfDisplay.setEditable(false);
         panelDisplay.add(tfDisplay);
         operator = "";
 
