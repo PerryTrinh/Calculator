@@ -4,7 +4,6 @@ import java.awt.event.*;
 public class FourFuncCalc extends Frame {
     private Button[] btnNumbers;
     private String[] buttons;
-    private Button btnHash, btnStar;
     private TextField tfDisplay;
     private int count;
 
