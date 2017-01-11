@@ -1,3 +1,3 @@
 # FourFuncCalc
 
-Only floor division
+Basic Four Function Calculator, uses Java Graphics
