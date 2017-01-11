@@ -1,6 +1,3 @@
-/**
- * Created by Perry on 1/10/2017.
- */
 public class Solver {
     public static boolean isNumeric(String str) {
         try {

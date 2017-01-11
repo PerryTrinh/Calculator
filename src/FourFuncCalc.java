@@ -59,8 +59,7 @@ public class FourFuncCalc extends Frame {
     private class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Button source = (Button)e.getSource();
-            String symbol = source.getLabel();
+            String symbol = ((Button)e.getSource()).getLabel();
 
             if(Solver.isNumeric(symbol)) {
                 if(!operator.equals("")) {
@@ -70,13 +69,13 @@ public class FourFuncCalc extends Frame {
                     count = Integer.parseInt(symbol);
                 }
                 tfDisplay.setText(symbol + "");
-            } else if(symbol.equals("C")) {
-                count = 0;
-                tfDisplay.setText(count + "");
-            } else if(symbol.equals("=")){
-                tfDisplay.setText(count + "");
             } else {
-                operator = symbol;
+                if(symbol.equals("C")) {
+                    count = 0;
+                } else {
+                    operator = symbol;
+                }
+                tfDisplay.setText(count + "");
             }
         }
     }
