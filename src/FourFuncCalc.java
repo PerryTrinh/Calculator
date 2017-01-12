@@ -5,9 +5,9 @@ public class FourFuncCalc extends Frame {
     private Button[] btnNumbers;
     private String[] buttons;
     private TextField tfDisplay;
-    private int calcHeight = 450;
-    private int calcWidth = 350;
-    private String count, prev;
+    private final int calcHeight = 450;
+    private final int calcWidth = 350;
+    private String curr, prev;
     private String operator;
 
     public FourFuncCalc() {
@@ -17,7 +17,7 @@ public class FourFuncCalc extends Frame {
         panelDisplay.add(tfDisplay);
         operator = "";
         prev = "0";
-        count = "0";
+        curr = "0";
 
         Panel panelButtons = new Panel(new GridLayout(4, 4, 5, 5));
         buttons = new String[] {"7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "*", "0", "C", "=", "/"};
@@ -65,26 +65,26 @@ public class FourFuncCalc extends Frame {
             String symbol = ((Button) e.getSource()).getLabel();
 
             if(Solver.isNumeric(symbol)) {
-                if(count.equals("0")) {
-                    count = symbol;
+                if(curr.equals("0")) {
+                    curr = symbol;
                 } else {
-                    count += symbol;
+                    curr += symbol;
                 }
-                tfDisplay.setText(count);
+                tfDisplay.setText(curr);
             } else if(symbol.equals("C")) {
-                count = "0";
+                curr = "0";
                 prev = "0";
                 operator = "";
-                tfDisplay.setText(count);
+                tfDisplay.setText(curr);
             } else { //symbol is an operator
                 if(operator.equals("")) {
-                    prev = count;
-                    count = "0";
+                    prev = curr;
+                    curr = "0";
                 } else if(!operator.equals("=")){
-                    prev = Solver.evaluate(operator, prev, count);
-                    count = "0";
+                    prev = Solver.evaluate(operator, prev, curr);
                     tfDisplay.setText(prev);
-                }
+                    curr = "0";
+                } // if operator equals "=", just want to set operator = symbol
                 operator = symbol;
             }
         }
