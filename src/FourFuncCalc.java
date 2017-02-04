@@ -3,7 +3,7 @@ import java.awt.event.*;
 
 public class FourFuncCalc extends Frame {
     private Button[] btnNumbers;
-    private String[] buttons;
+    private String[] buttonNames;
     private TextField tfDisplay;
     private final int calcHeight = 450;
     private final int calcWidth = 350;
@@ -20,11 +20,11 @@ public class FourFuncCalc extends Frame {
         curr = "0";
 
         Panel panelButtons = new Panel(new GridLayout(4, 4, 5, 5));
-        buttons = new String[] {"7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "*", "0", "C", "=", "/"};
-        btnNumbers = new Button[buttons.length];
+        buttonNames = new String[] {"7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "*", "0", "C", "=", "/"};
+        btnNumbers = new Button[buttonNames.length];
 
-        for(int i = 0; i < buttons.length; i++) {
-            btnNumbers[i] = new Button(buttons[i]);
+        for(int i = 0; i < buttonNames.length; i++) {
+            btnNumbers[i] = new Button(buttonNames[i]);
             panelButtons.add(btnNumbers[i]);
         }
 
@@ -80,7 +80,7 @@ public class FourFuncCalc extends Frame {
                 if(operator.equals("")) {
                     prev = curr;
                     curr = "0";
-                } else if(!operator.equals("=")){
+                } else if(!operator.equals("=") && !symbol.equals(operator)){
                     prev = Solver.evaluate(operator, prev, curr);
                     tfDisplay.setText(prev);
                     curr = "0";
