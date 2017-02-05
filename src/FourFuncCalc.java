@@ -2,30 +2,34 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class FourFuncCalc extends Frame {
-    private Button[] btnNumbers;
+    private Button[] buttons;
     private String[] buttonNames;
     private TextField tfDisplay;
-    private final int calcHeight = 450;
-    private final int calcWidth = 350;
+    private final int CALCHEIGHT = 450;
+    private final int CALCWIDTH = 350;
     private String curr, prev;
     private String operator;
 
     public FourFuncCalc() {
-        Panel panelDisplay = new Panel(new FlowLayout());
-        tfDisplay = new TextField("0", 20);
-        tfDisplay.setEditable(false);
-        panelDisplay.add(tfDisplay);
         operator = "";
         prev = "0";
         curr = "0";
 
+        Font uniform = new Font("Times New Roman", Font.PLAIN, 25);
+
+        Panel panelDisplay = new Panel(new FlowLayout());
+        tfDisplay = new TextField("0", 20);
+        tfDisplay.setEditable(false);
+        tfDisplay.setFont(uniform);
+        panelDisplay.add(tfDisplay);
+
         Panel panelButtons = new Panel(new GridLayout(4, 4, 5, 5));
         buttonNames = new String[] {"7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "*", "0", "C", "=", "/"};
-        btnNumbers = new Button[buttonNames.length];
+        buttons = new Button[buttonNames.length];
 
         for(int i = 0; i < buttonNames.length; i++) {
-            btnNumbers[i] = new Button(buttonNames[i]);
-            panelButtons.add(btnNumbers[i]);
+            buttons[i] = new Button(buttonNames[i]);
+            panelButtons.add(buttons[i]);
         }
 
         setLayout(new BorderLayout());
@@ -33,8 +37,9 @@ public class FourFuncCalc extends Frame {
         add(panelButtons, BorderLayout.CENTER);
 
         ButtonListener listener = new ButtonListener();
-        for(Button i: btnNumbers) {
+        for(Button i: buttons) {
             i.addActionListener(listener);
+            i.setFont(uniform);
         }
 
         addWindowListener(new WindowAdapter() {
@@ -45,11 +50,11 @@ public class FourFuncCalc extends Frame {
         });
 
         setTitle("Four Function Calculator");
-        setSize(calcWidth, calcHeight);
+        setSize(CALCWIDTH, CALCHEIGHT);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (dim.width - calcWidth)/2;
-        int y = (dim.height - calcHeight)/2;
+        int x = (dim.width - CALCWIDTH)/2;
+        int y = (dim.height - CALCHEIGHT)/2;
 
         setLocation(x, y);
         setVisible(true);
