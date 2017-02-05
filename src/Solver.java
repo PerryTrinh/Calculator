@@ -28,7 +28,7 @@ public class Solver {
             previous = "0";
             current = applyTrigFunc(input, current);
             return current;
-        } else if (operator.equals("")) {
+        } else if (operator.equals("")) { //At this point, input is one of the basic operators
             previous = current;
             operator = input;
             current = "0";
@@ -88,7 +88,6 @@ public class Solver {
     }
 
     private String applyTrigFunc(String func, String radians) {
-        //TODO: Fix
         double numRadians = Double.parseDouble(radians);
         switch(func) {
             case "sin":
