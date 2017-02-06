@@ -87,8 +87,8 @@ public class Solver {
         return str.equals("sin") || str.equals("cos") || str.equals("tan");
     }
 
-    private String applyTrigFunc(String func, String radians) {
-        double numRadians = Double.parseDouble(radians);
+    private String applyTrigFunc(String func, String degrees) {
+        double numRadians = Math.toRadians(Double.parseDouble(degrees));
         switch(func) {
             case "sin":
                 return checkZero(Math.sin(numRadians));
@@ -102,7 +102,7 @@ public class Solver {
     }
 
     private String checkZero(double num) {
-        DecimalFormat rounder = new DecimalFormat("0.#####");
+        DecimalFormat rounder = new DecimalFormat("0.######");
         String rounded = rounder.format(num);
         if((Math.round(num) + "").equals(rounded)) {
             return rounded;
