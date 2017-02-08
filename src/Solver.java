@@ -4,16 +4,28 @@ public class Solver {
     private String current;
     private String previous;
     private String operator;
+    private String radDeg;
 
     public Solver() {
         current = "0";
         previous = "0";
         operator = "";
+        radDeg = "Deg";
+    }
+
+    public void switchRadDeg() {
+        if (this.radDeg.equals("Rad")) {
+            this.radDeg = "Deg";
+        } else {
+            this.radDeg = "Rad";
+        }
     }
 
     public String compute(String input) {
         if (isNumeric(input)) {
-            if (current.equals("0")) {
+            if (input.equals("pi")) {
+                current = Double.toString(Math.PI);
+            } else if (current.equals("0")) {
                 current = input;
             } else {
                 current += input;
@@ -28,7 +40,21 @@ public class Solver {
             previous = "0";
             current = applyTrigFunc(input, current);
             return current;
-        } else if (operator.equals("")) { //At this point, input is one of the basic operators
+        } else if (input.equals("1/x")) {
+            return applyInverse();
+        } else if (input.equals("x^2")) {
+            return applyExp(2);
+        } else if (input.equals("sqrt")) {
+            return applyExp(0);
+        } else if (input.equals("x!")) {
+            return applyFactorial();
+        } else { //At this point, input is one of the basic operators (+, -, /, *)
+            return computeBasicOperators(input);
+        }
+    }
+
+    private String computeBasicOperators(String input) {
+        if (operator.equals("")) { //At this point, input is one of the basic operators
             previous = current;
             operator = input;
             current = "0";
@@ -46,9 +72,41 @@ public class Solver {
         }
     }
 
-    //Returns true is string is a numeric string or a decimal point
+    private String applyInverse() {
+        if (current.equals("0")) {
+            return "Error: Divide by 0";
+        }
+        current = Double.toString(1/Double.parseDouble(current));
+        return current;
+    }
+
+    private String applyExp(int exp) {
+        if (exp == 2) {
+            current = Double.toString(Math.pow(Double.parseDouble(current), 2));
+        } else {
+            current = Double.toString(Math.sqrt(Double.parseDouble(current)));
+        }
+        return current;
+    }
+
+    private String applyFactorial() {
+        try {
+            int currentInt = Integer.parseInt(current);
+
+            int result = 1;
+            for (int i = 1; i <= currentInt; i++) {
+                result *= i;
+            }
+
+            return Integer.toString(result);
+        } catch (NumberFormatException e) {
+            return "Cannot (yet) perform factorials on decimals";
+        }
+    }
+
+    //Returns true is string is a numeric string, a decimal point, or pi
     private boolean isNumeric(String str) {
-        if (str.equals(".")) {
+        if (str.equals(".") || str.equals("pi")) {
             return true;
         }
         try {
@@ -87,15 +145,21 @@ public class Solver {
         return str.equals("sin") || str.equals("cos") || str.equals("tan");
     }
 
-    private String applyTrigFunc(String func, String degrees) {
-        double numRadians = Math.toRadians(Double.parseDouble(degrees));
+    private String applyTrigFunc(String func, String value) {
+        double numValue = Double.parseDouble(value);
+
+        //Need to change value to radians because Math.sin/cos/tan only takes in radians
+        if (this.radDeg.equals("Deg")) {
+            numValue = Math.toRadians(numValue);
+        }
+
         switch(func) {
             case "sin":
-                return checkZero(Math.sin(numRadians));
+                return checkZero(Math.sin(numValue));
             case "cos":
-                return checkZero(Math.cos(numRadians));
+                return checkZero(Math.cos(numValue));
             case "tan":
-                return checkZero(Math.tan(numRadians));
+                return checkZero(Math.tan(numValue));
             default:
                 return "0";
         }
