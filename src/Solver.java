@@ -1,6 +1,11 @@
 import java.text.DecimalFormat;
 
 public class Solver {
+    /**
+     * "current" is what is currently displayed to the user
+     * "previous" is the previous entry by the user
+     * "operator" is the operator that has NOT been applied but is still pending
+     */
     private String current;
     private String previous;
     private String operator;
@@ -27,7 +32,7 @@ public class Solver {
                 current = Double.toString(Math.PI);
             } else if (current.equals("0")) {
                 current = input;
-            } else {
+            } else { //There is already a number displayed to user
                 current += input;
             }
             return current;
@@ -37,7 +42,6 @@ public class Solver {
             operator = "";
             return current;
         } else if (isTrigFunc(input)){
-            previous = "0";
             current = applyTrigFunc(input, current);
             return current;
         } else if (input.equals("1/x")) {
@@ -53,8 +57,9 @@ public class Solver {
         }
     }
 
+
     private String computeBasicOperators(String input) {
-        if (operator.equals("")) { //At this point, input is one of the basic operators
+        if (operator.equals("")) {
             previous = current;
             operator = input;
             current = "0";
@@ -100,11 +105,11 @@ public class Solver {
 
             return Integer.toString(result);
         } catch (NumberFormatException e) {
-            return "Cannot (yet) perform factorials on decimals";
+            return "Error: Decimal Factorial";
         }
     }
 
-    //Returns true is string is a numeric string, a decimal point, or pi
+    //Returns true is string is a numeric string, a decimal point, or PI
     private boolean isNumeric(String str) {
         if (str.equals(".") || str.equals("pi")) {
             return true;
